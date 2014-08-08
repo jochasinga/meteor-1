@@ -22,6 +22,7 @@ Meteor.methods
 
                 # check that there are no previous post with same link
                 if postAttributes.url and postWithSameLink
+                        # redirect user to the post with that same link
                         throw new Meteor.Error 302,
                                 "This link has already been posted",
                                 postWithSameLink._id
