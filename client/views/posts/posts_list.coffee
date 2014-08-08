@@ -1,3 +1,4 @@
+# Populate posts with mock data postsData
 postsData = [
   {
     title: "Introducting Telescope"
@@ -15,4 +16,5 @@ postsData = [
     url: "http://themeteorbook.com"
   }
 ]
+# Specify posts helper
 Template.postsList.helpers posts: postsData
