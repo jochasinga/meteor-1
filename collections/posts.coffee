@@ -6,32 +6,27 @@
 # a global variable in Coffeescript.
 
 exports = this
-exports.Posts = new Meteor.Collection 'posts'
+exports.Posts = new Meteor.Collection('posts')
 
 Meteor.methods
         post: (postAttributes) ->
                 user = Meteor.user()
-                postWithSameLink = Posts.findOne {url: postAttributes.url}
+                postWithSameLink = Posts.findOne(url: postAttributes.url)
 
                 # ensure the user is logged in
-                if not user
-                        throw new Meteor.Error 401, "You need to login to post new stories"
+                throw new Meteor.Error(401, "You need to login to post new stories") unless user
                 # ensure the post has a title
-                if not postAttributes.title
-                        throw new Meteor.Error 422, "Please fill in a headline"
-
+                throw new Meteor.Error(422, "Please fill in a headline") unless postAttributes.title
                 # check that there are no previous post with same link
-                if postAttributes.url and postWithSameLink
-                        # redirect user to the post with that same link
-                        throw new Meteor.Error 302,
-                                "This link has already been posted",
-                                postWithSameLink._id
+                throw new Meteor.Error(302, "This link has already been posted", postWithSameLink._id) if postAttributes.url and postWithSameLink
 
                 # pick out the whitelisted keys
-                post = _.extend _.pick postAttributes, 'url', 'title', 'message',
-                        userid: user._id
+                post = _.extend(_.pick(postAttributes, 'url', 'title', 'message'),
+                        userId: user._id
                         author: user.username
                         submitted: new Date().getTime()
+                )
 
-                postId = Posts.insert post
+                postId = Posts.insert(post)
+                return postId
                                 

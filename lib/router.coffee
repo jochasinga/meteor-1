@@ -1,24 +1,27 @@
 Router.configure
-        layoutTemplate: 'layout'
-        loadingTemplate: 'loading'
-        waitOn: -> Meteor.subscribe 'posts'
-        
-Router.map ->
-        @.route 'postsList', path: '/'
-        @.route 'postPage',
-                path: '/posts/:_id'
-                data: -> Posts.findOne @.params._id
-        @.route 'postSubmit',
-                path: '/submit'
+  layoutTemplate: 'layout'
+  loadingTemplate: 'loading'
+  waitOn: -> Meteor.subscribe 'posts'    
 
+Router.map ->
+  @route 'postsList',
+    path: '/'
+  @route 'postPage',
+    path: '/posts/:_id'
+    data: -> Posts.findOne @params._id
+  @route 'postEdit',
+    path: '/posts/:_id/edit',
+    data: -> Posts.findOne @params._id
+  @route 'postSubmit',
+    path: '/submit'
+    
 # Hook to check if the user is logged in
 requireLogin = (pause) ->
-        if not Meteor.user()
-                if Meteor.loggingIn()
-                        @.render @.loadingTemplate
-                else
-                        @.render 'accessDenied'
-                pause()
-                                                 
-Router.onBeforeAction 'loading'
-Router.onBeforeAction requireLogin, only: 'postSubmit'
+  unless  Meteor.user()
+    if Meteor.loggingIn()
+      @render 'loading'
+    else
+      @render 'accessDenied'
+    pause()
+                                
+Router.onBeforeAction(requireLogin, only: 'postSubmit')

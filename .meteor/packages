@@ -10,3 +10,5 @@ iron-router
 spin
 accounts-ui-bootstrap-dropdown
 accounts-password
+underscore
+jquery
