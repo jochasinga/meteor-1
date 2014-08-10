@@ -24,11 +24,15 @@ PostsListController = RouteController.extend
 Router.map ->
   @route 'postPage',
     path: '/posts/:_id'
-    waitOn: -> Meteor.subscribe 'comments', @params._id
+    waitOn: -> [
+      Meteor.subscribe 'singlePost', @params._id
+      Meteor.subscribe 'comments', @params._id
+    ]
     data: -> Posts.findOne @params._id
 
   @route 'postEdit',
-    path: '/posts/:_id/edit',
+    path: '/posts/:_id/edit'
+    waitOn: -> Meteor.subscribe 'singlePost', @params._id
     data: -> Posts.findOne @params._id
 
   @route 'postSubmit',
