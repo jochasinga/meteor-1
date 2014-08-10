@@ -9,6 +9,4 @@ Template.postItem.helpers
     a.href = @url
     a.hostname
 
-  commentsCount: ->
-    Comments.find( postId : @_id ).count()
 
