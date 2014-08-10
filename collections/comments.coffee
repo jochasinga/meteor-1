@@ -23,6 +23,13 @@ Meteor.methods
 
     Posts.update comment.postId, $inc: {commentsCount: 1}
 
-    Comments.insert comment
+    # create the comment, save the id
+    comment._id = Comments.insert(comment)
+
+    # now create a notification, informing the user that
+    # there has been a comment
+    createCommentNotification(comment)
+
+    return comment._id
 
 
