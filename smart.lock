@@ -4,7 +4,8 @@
     "basePackages": {
       "iron-router": {},
       "accounts-ui-bootstrap-dropdown": {},
-      "spin": {}
+      "spin": {},
+      "iron-router-progress": {}
     },
     "packages": {
       "iron-router": {
@@ -21,6 +22,11 @@
         "git": "https://github.com/SachaG/meteor-spin.git",
         "tag": "v2.0.4",
         "commit": "f7b1e12a7caff1283cdb3671a393c182d0ae9862"
+      },
+      "iron-router-progress": {
+        "git": "https://github.com/Multiply/iron-router-progress.git",
+        "tag": "v0.4.1",
+        "commit": "496fcda9a6ec352b4733725f60c6f280250c3541"
       },
       "iron-layout": {
         "git": "https://github.com/EventedMind/iron-layout.git",

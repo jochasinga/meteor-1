@@ -33,6 +33,7 @@ Router.map ->
 
   @route 'postSubmit',
     path: '/submit'
+    disableProgress: true
 
   @route 'postsList',
     path: '/:postsLimit?'
