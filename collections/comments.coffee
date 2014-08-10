@@ -30,6 +30,6 @@ Meteor.methods
     # there has been a comment
     createCommentNotification(comment)
 
-    return comment._id
+    comment._id
 
 
