@@ -3,6 +3,24 @@ Router.configure
   loadingTemplate: 'loading'
   waitOn: -> Meteor.subscribe 'notifications'
 
+PostsListController = RouteController.extend
+  template: 'postsList'
+  increment: 5
+  limit: ->
+    parseInt(@params.postsLimit) or @increment
+  findOptions: ->
+    sort: { submitted: -1 }
+    limit: @limit()
+  waitOn: ->
+    Meteor.subscribe 'posts', @findOptions()
+  posts: ->
+    Posts.find {}, @findOptions()
+  data: ->
+    hasMore = @posts().count() is @limit()
+    nextPath = @route.path {postsLimit: @limit() + @increment}
+
+    {posts: @posts(), nextPath: if hasMore then nextPath else null}
+   
 Router.map ->
   @route 'postPage',
     path: '/posts/:_id'
@@ -18,14 +36,7 @@ Router.map ->
 
   @route 'postsList',
     path: '/:postsLimit?'
-    waitOn: ->
-      limit = parseInt(@params.postsLimit) or 5
-
-      Meteor.subscribe 'posts', {sort: {submitted: -1}, limit: limit}
-
-    data: ->
-      limit = parseInt(@params.postsLimit) or 5
-      posts: Posts.find {}, {sort: {submitted: -1}, limit: limit}
+    controller: PostsListController
         
 # Hook to check if the user is logged in
 requireLogin = (pause) ->
@@ -37,4 +48,4 @@ requireLogin = (pause) ->
     pause()
                                 
 Router.onBeforeAction requireLogin, {only: 'postSubmit'}
-Router.onBeforeAction( -> clearErrors())
+Router.onBeforeAction  -> clearErrors()
