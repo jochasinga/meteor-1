@@ -1,6 +1,5 @@
 # Define the domain helper function
 Template.postItem.helpers
-
   ownPost: ->
     @userId is Meteor.userId()
 
@@ -9,4 +8,8 @@ Template.postItem.helpers
     a.href = @url
     a.hostname
 
+Template.postItem.events
+  'click .upvote': (e) ->
+    e.preventDefault()
+    Meteor.call 'upvote', @_id
 

@@ -22,7 +22,9 @@ if Posts.find().count() is 0
     url: 'http://sachagreif.com/introducing-telescope/'
     submitted: now - 7 * 3600 * 1000
     commentsCount: 2
-
+    upvoters: []
+    votes: 0
+       
   Comments.insert
     postId: telescopeId
     userId: tom._id
@@ -44,6 +46,8 @@ if Posts.find().count() is 0
     url: 'http://meteor.com'
     submited: now - 10 * 3600 * 1000
     commentsCount: 0
+    upvoters: []
+    votes: 0
 
   Posts.insert
     title: 'The Meteor Book'
@@ -52,6 +56,8 @@ if Posts.find().count() is 0
     url: 'http://themeteorbook.com'
     submitted: now - 12 * 3600 * 1000
     commentsCount: 0
+    upvoters: []
+    votes: 0
 
   for i in [0...10]
     Posts.insert
@@ -61,3 +67,5 @@ if Posts.find().count() is 0
       url: "http://google.com/?q=test-#{i}"
       submitted: now - i * 3600 * 1000
       commentsCount: 0
+      upvoters: []
+      votes: 0
