@@ -2,4 +2,5 @@
 Meteor.publish 'posts', -> Posts.find()
 
 # Publish all comments to the client
-Meteor.publish 'comments', -> Comments.find()
+Meteor.publish 'comments', (postId) ->
+  Comments.find postId: postId
