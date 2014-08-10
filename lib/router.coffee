@@ -26,4 +26,5 @@ requireLogin = (pause) ->
       @render 'accessDenied'
     pause()
                                 
-Router.onBeforeAction(requireLogin, only: 'postSubmit')
+Router.onBeforeAction requireLogin, {only: 'postSubmit'}
+Router.onBeforeAction( -> clearErrors())
