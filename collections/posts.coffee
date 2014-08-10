@@ -12,6 +12,11 @@ Posts.allow
   update: ownsDocument
   remove: ownsDocument
 
+Posts.deny
+  update: (userId, post, fieldNames) ->
+    # may only edit the following two fields:
+    _.without(fieldNames, 'url', 'title').length > 0
+
 Meteor.methods
   post: (postAttributes) ->
     user = Meteor.user()
